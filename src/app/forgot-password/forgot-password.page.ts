@@ -43,7 +43,7 @@ export class ForgotPasswordPage implements OnInit {
       data => { 
         console.log('ret data' + JSON.stringify(data, null, " ")) 
         this.forgotPassInfoPopup.alertPopup('Request to reset password sent', 'alert-success');
-        window.location.href = (this.pageRole === 'tenat') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:810/#/login';
+        window.location.href = (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8103/#/login';
       }
     );
   }
