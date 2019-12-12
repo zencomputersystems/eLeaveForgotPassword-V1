@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '../../../node_modules/@angular/router';
 import { ApiService } from '../services/api.service';
 
+
 @Component({
   selector: 'app-forgot-password',
   templateUrl: './forgot-password.page.html',
@@ -13,7 +14,7 @@ export class ForgotPasswordPage implements OnInit {
   constructor(
     private forgotPassRoute: ActivatedRoute,
     private forgotPassApi: ApiService,
-    private forgotPassInfoPopup: InfoPopupService
+    private forgotPassInfoPopup: InfoPopupService,
   ) { }
 
   public userEmail = '';
@@ -41,8 +42,8 @@ export class ForgotPasswordPage implements OnInit {
     }, '/api/forgot-password').subscribe(
       data => { 
         console.log('ret data' + JSON.stringify(data, null, " ")) 
-        this.forgotPassInfoPopup.alertPopup('Request to reset password send', 'alert-success');
-        // (this.pageRole === 'tenat')
+        this.forgotPassInfoPopup.alertPopup('Request to reset password sent', 'alert-success');
+        window.location.href = (this.pageRole === 'tenat') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:810/#/login';
       }
     );
   }
