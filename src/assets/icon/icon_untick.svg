@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+    <defs>
+        <style>
+            .cls-1{fill:#ff6768}.cls-2{fill:#ef4849}.cls-3{fill:#e8e9ec}.cls-4{fill:none;stroke:#ff6768;stroke-linecap:square;stroke-linejoin:round}
+        </style>
+    </defs>
+    <g id="Icon_Tick" data-name="Icon Tick" transform="translate(0 -1028.362)">
+        <circle id="Ellipse_64" cx="12" cy="12" r="12" class="cls-1" data-name="Ellipse 64" transform="translate(0 1028.362)"/>
+        <path id="Path_568" d="M14.525 23.717q.345-.067.686-.154.577-.161 1.137-.379t1.1-.488a12 12 0 0 0 1.041-.6q.5-.324.975-.7a12 12 0 0 0 .9-.793q.43-.418.816-.877a12 12 0 0 0 .727-.955q.339-.495.627-1.021t.521-1.08q.234-.553.412-1.127.152-.5.26-1.016L16.6 7.4a6.5 6.5 0 1 0-9.2 9.2z" class="cls-2" data-name="Path 568" transform="translate(0 1028.362)"/>
+        <circle id="Ellipse_65" cx="6.5" cy="6.5" r="6.5" class="cls-3" data-name="Ellipse 65" transform="translate(5.5 1033.862)"/>
+        <path id="icon-cancel" d="M1.415 5.4l1.931-1.931L5.277 5.4l.123-.123-1.931-1.931L5.4 1.415l-.122-.122-1.932 1.931-1.931-1.931-.122.122 1.931 1.931-1.931 1.931z" class="cls-4" transform="translate(8.594 1036.969)"/>
+    </g>
+</svg>
