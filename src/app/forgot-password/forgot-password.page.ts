@@ -30,7 +30,6 @@ export class ForgotPasswordPage implements OnInit {
     if (this.userEmail === '') {
       this.resetErrorMsg = 'Email is required';
     } else {
-      console.log('req to forgot password');
       this.processReqForgetPass();
     }
   }
@@ -41,10 +40,10 @@ export class ForgotPasswordPage implements OnInit {
       role: this.pageRole
     }, '/api/forgot-password').subscribe(
       data => { 
-        console.log('ret data' + JSON.stringify(data, null, " ")) 
         this.forgotPassInfoPopup.alertPopup('Request to reset password sent', 'alert-success');
         setTimeout(() => {
-          window.location.href = (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8103/#/login';
+          window.location.href = (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : (this.pageRole === 'user') ?
+            'http://zencore.zen.com.my:8101/#/login' : 'http://zencore.zen.com.my:8102/#/login';
         }, 2500);
       }
     );
