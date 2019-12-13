@@ -43,7 +43,7 @@ export class ForgotPasswordPage implements OnInit {
         this.forgotPassInfoPopup.alertPopup('Request to reset password sent', 'alert-success');
         setTimeout(() => {
           window.location.href = (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : (this.pageRole === 'user') ?
-            'http://zencore.zen.com.my:8101/#/login' : 'http://zencore.zen.com.my:8102/#/login';
+            'http://zencore.zen.com.my:8101/#/' : 'http://zencore.zen.com.my:8102/#/';
         }, 2500);
       }
     );
