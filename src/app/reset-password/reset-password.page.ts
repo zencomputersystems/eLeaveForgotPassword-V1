@@ -48,9 +48,9 @@ export class ResetPasswordPage implements OnInit {
               if (data.response === undefined) {
                 this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success') 
                 // window.location.href = (this.pageRole === 'tenat') ? 'zencore.zen.com.my:8103~' : 'zencore.zen.com.my:8103';    
-                setTimeout(() => {
-                  window.location.href = (this.currRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8102/#/';  
-                }, 2500);  
+                // setTimeout(() => {
+                //   window.location.href = (this.currRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8102/#/';  
+                // }, 2500);  
               } else {
                 this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
               }
