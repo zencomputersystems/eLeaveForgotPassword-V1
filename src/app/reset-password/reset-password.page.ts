@@ -44,17 +44,11 @@ export class ResetPasswordPage implements OnInit {
           { tokenId: this.currToken, password: encryptPass })
           .subscribe(
             data => {
-              console.log(data);
               if (data.response === undefined) {
                 this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
-                console.log(data[0]);
-                console.log(data[0].HTTP_REFERER);
-                console.log(data.HTTP_REFERER);
-                // window.location.href = (this.pageRole === 'tenat') ? 'zencore.zen.com.my:8103~' : 'zencore.zen.com.my:8103';    
-                // setTimeout(() => {
-                //   // window.location.href = (this.currRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8102/#/';  
-                //   window.location.href = data.HTTP_REFERER;
-                // }, 2500);  
+                setTimeout(() => {
+                  window.location.href = data[0].HTTP_REFERER;
+                }, 2500);  
               } else {
                 this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
               }
