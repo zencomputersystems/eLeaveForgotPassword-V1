@@ -22,6 +22,9 @@ export class ForgotPasswordPage implements OnInit {
   public pageRole;
 
   ngOnInit() {
+    console.log('forgot password history');
+    // console.log(history.back())
+    console.log(document.referrer);
     this.pageRole =  this.forgotPassRoute.snapshot.paramMap.get('role');
   }
 
