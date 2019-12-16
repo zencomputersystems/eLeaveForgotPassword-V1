@@ -20,11 +20,13 @@ export class ForgotPasswordPage implements OnInit {
   public userEmail = '';
   public resetErrorMsg;
   public pageRole;
+  public prevPageUrl;
 
   ngOnInit() {
     console.log('forgot password history');
     // console.log(history.back())
     console.log(document.referrer);
+    this.prevPageUrl = document.referrer;
     this.pageRole =  this.forgotPassRoute.snapshot.paramMap.get('role');
   }
 
@@ -40,12 +42,13 @@ export class ForgotPasswordPage implements OnInit {
   async processReqForgetPass() {
     this.forgotPassApi.postApiWoHeader({
       email: this.userEmail,
-      role: this.pageRole
+      role: this.pageRole,
+      httpReferer: this.prevPageUrl
     }, '/api/forgot-password').subscribe(
       data => { 
         this.forgotPassInfoPopup.alertPopup('Request to reset password sent', 'alert-success');
         setTimeout(() => {
-          window.location.href = (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8102/#/';
+          window.location.href = this.prevPageUrl; // (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8102/#/';
         }, 2500);
       }
     );
