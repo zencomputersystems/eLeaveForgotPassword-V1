@@ -44,6 +44,7 @@ export class ResetPasswordPage implements OnInit {
           { tokenId: this.currToken, password: encryptPass })
           .subscribe(
             data => {
+              console.log(data);
               if (data.response === undefined) {
                 this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success') 
                 // window.location.href = (this.pageRole === 'tenat') ? 'zencore.zen.com.my:8103~' : 'zencore.zen.com.my:8103';    
