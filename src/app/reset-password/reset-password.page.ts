@@ -122,18 +122,36 @@ export class ResetPasswordPage implements OnInit {
       { tokenId: this.currToken, password: encryptPass })
       .subscribe(
         data => {
-          if (data.response === undefined) {
-            this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
-            setTimeout(() => {
-              window.location.href = data[0].HTTP_REFERER;
-            }, 2500);
-          } else {
-            this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
-          }
+          this.processRes(data);
+          // if (data.response === undefined) {
+          //   this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
+          //   setTimeout(() => {
+          //     window.location.href = data[0].HTTP_REFERER;
+          //   }, 2500);
+          // } else {
+          //   this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
+          // }
         }
       );
-
   }
+
+  /**
+   * This method is to process returned response from patch request to update password 
+   * @param {*} data This parameter is to pass response data from API
+   * @memberof ResetPasswordPage
+   */
+  processRes(data) {
+    if (data.response === undefined) {
+      this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
+      setTimeout(() => {
+        window.location.href = data[0].HTTP_REFERER;
+      }, 2500);
+    } else {
+      this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
+    }
+  }
+
+  // }
   /**
    * This method is to check validity between 2 password
    * @param {*} pass1 This parameter will pass password value
