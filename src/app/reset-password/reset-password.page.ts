@@ -107,24 +107,33 @@ export class ResetPasswordPage implements OnInit {
         this.retMsg = '';
         // console.log('password to be saved');
         const encryptPass = (this.CryptoJS.SHA256(this.newPassword)).toString(this.CryptoJS.enc.Hex);
-        this.resetPassApi.patchApiWoHeader('/api/forgot-password', 
-          { tokenId: this.currToken, password: encryptPass })
-          .subscribe(
-            data => {
-              if (data.response === undefined) {
-                this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
-                setTimeout(() => {
-                  window.location.href = data[0].HTTP_REFERER;
-                }, 2500);  
-              } else {
-                this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
-              }
-            }
-          );
+        this.requetResetPassword(encryptPass);
       }
     };
   }
 
+  /**
+   * This method is to send request to API to patch new password
+   * @param {*} encryptPass This parameter is to pass new password to be updated
+   * @memberof ResetPasswordPage
+   */
+  requetResetPassword(encryptPass) {
+    this.resetPassApi.patchApiWoHeader('/api/forgot-password',
+      { tokenId: this.currToken, password: encryptPass })
+      .subscribe(
+        data => {
+          if (data.response === undefined) {
+            this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
+            setTimeout(() => {
+              window.location.href = data[0].HTTP_REFERER;
+            }, 2500);
+          } else {
+            this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
+          }
+        }
+      );
+
+  }
   /**
    * This method is to check validity between 2 password
    * @param {*} pass1 This parameter will pass password value
