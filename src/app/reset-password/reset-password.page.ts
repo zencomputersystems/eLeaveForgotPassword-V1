@@ -43,11 +43,10 @@ export class ResetPasswordPage implements OnInit {
   private currToken;
 
   /**
-   * This method is to bind current role value
-   * @private
+   * This method is to bind current login type
    * @memberof ResetPasswordPage
    */
-  private currRole;
+  public currLoginType;
 
   /**
    * This method is to bind verification of new password value
@@ -90,7 +89,7 @@ export class ResetPasswordPage implements OnInit {
    */
   ngOnInit() {
     this.currToken = this.resetPassRoute.snapshot.paramMap.get('token');
-    this.currRole = this.resetPassRoute.snapshot.paramMap.get('role');
+    this.currLoginType = this.resetPassRoute.snapshot.paramMap.get('loginType');
   }
 
   /**
