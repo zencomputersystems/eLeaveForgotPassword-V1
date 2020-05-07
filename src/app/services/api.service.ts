@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
-import { map } from 'rxjs/operators'; 
-import { Observable } from '../../../node_modules/rxjs';
+import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 
 /**
@@ -32,13 +31,20 @@ export class ApiService {
   public ROOT_URL = 'http://zencore.zen.com.my:3002';
 
   /**
+   * This property is bind value of request API's url
+   * @type {string}
+   * @memberof ApiService
+   */
+  public baseUrl: string = "http://zencore.zen.com.my:3000";
+
+  /**
    * This method is to send post request to API without header
    * @param {*} data This paramter will store an array of requested post 
    * @param {string} address This parameter will store the string of requested addrest to be request in API
    * @returns
    * @memberof ApiService
    */
-  postApiWoHeader(data: any, address: string ) {
+  postApiWoHeader(data: any, address: string) {
     return this.apiHttpClient.post(this.ROOT_URL + address, data)
       .pipe(map((data: any) => { return data; }));
   }
@@ -53,10 +59,8 @@ export class ApiService {
   patchApiWoHeader(address: string, data: any) {
     // return this.apiHttp.patch(this.ROOT_URL + address, data);
     return this.apiHttpClient.patch(this.ROOT_URL + address, data)
-    //.pipe(map((res: Response) => res.json()));
+      //.pipe(map((res: Response) => res.json()));
       .pipe(map((data: any) => { return data; }));
-
-
   }
 
   /**
@@ -66,7 +70,40 @@ export class ApiService {
    * @memberof ApiService
    */
   getApi(address: string) {
-    return this.apiHttp.get(address);
+    return this.apiHttp.get(address)
+      .pipe(map((res: Response) => res.json()));
+  }
+
+  /**
+   * patch api 
+   * @param {*} patchData
+   * @param {string} url
+   * @returns
+   * @memberof ApiService
+   */
+  patchApi(patchData: any, url: string) {
+    return this.apiHttp.patch(this.baseUrl + url, patchData)
+      .pipe(map((res: Response) => res.json()))
+  }
+
+  /**
+   * change password for new user (local)
+   * @param {*} data
+   * @returns
+   * @memberof ApiService
+   */
+  patchInvitation(data: any) {
+    return this.patchApi(data, '/api/invitation');
+  }
+
+  /**
+   * activate new user (AD)
+   * @param {string} token
+   * @returns
+   * @memberof ApiService
+   */
+  getInvitation(token: string) {
+    return this.getApi('/api/invitation/' + token);
   }
 
   // /**

@@ -2,6 +2,22 @@ import { ApiService } from './../services/api.service';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '../../../node_modules/@angular/router';
 import { InfoPopupService } from '../services/info-popup.service';
+import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
+
+/**
+ * error matcher
+ * @export
+ * @class MyErrorStateMatcher
+ * @implements {ErrorStateMatcher}
+ */
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+    return (invalidCtrl || invalidParent);
+  }
+}
 
 /**
  * This component is to set up reset password page
@@ -16,25 +32,6 @@ import { InfoPopupService } from '../services/info-popup.service';
 })
 export class ResetPasswordPage implements OnInit {
 
-  /**
-   * Creates an instance of ResetPasswordPage.
-   * @param {ActivatedRoute} resetPassRoute This property is to get methods from ActivatedRoute
-   * @param {ApiService} resetPassApi This property is to get methods from ApiService
-   * @param {InfoPopupService} resetPassInfoPopup This property is to get methods from InfoPopupService
-   * @memberof ResetPasswordPage
-   */
-  constructor(
-    private resetPassRoute: ActivatedRoute,
-    private resetPassApi: ApiService,
-    private resetPassInfoPopup: InfoPopupService
-  ) { }
-
-  /**
-   * This property is to get methods from crypto-js
-   * @memberof ResetPasswordPage
-   */
-  CryptoJS = require('crypto-js');
-
   /** 
    * This method is to bind current token value
    * @private
@@ -47,20 +44,6 @@ export class ResetPasswordPage implements OnInit {
    * @memberof ResetPasswordPage
    */
   public currLoginType;
-
-  /**
-   * This method is to bind verification of new password value
-   * @private
-   * @memberof ResetPasswordPage
-   */
-  public retPass1 = '';
-
-  /**
-   * This method is to bind verification of confirmation of new password value
-   * @private
-   * @memberof ResetPasswordPage
-   */
-  public retPass2 = '';
 
   /**
    * This method is to bind of new password value
@@ -77,11 +60,51 @@ export class ResetPasswordPage implements OnInit {
   public confirmNewPassword;
 
   /**
-   * This method is to set return error message value from requested API
-   * @private
+   * form group 
+   * @type {FormGroup}
    * @memberof ResetPasswordPage
    */
-  public retMsg = '';
+  public myForm: FormGroup;
+
+  /**
+   * error matcher
+   * @memberof ResetPasswordPage
+   */
+  public matcher = new MyErrorStateMatcher();
+
+  /**
+   * hide new password open-eye icon
+   * @type {boolean}
+   * @memberof ResetPasswordPage
+   */
+  public hideNew: boolean = false;
+
+  /**
+   * hide confirm password open-eye icon
+   * @type {boolean}
+   * @memberof ResetPasswordPage
+   */
+  public hideConfirm: boolean = false;
+
+  /**
+   *Creates an instance of ResetPasswordPage.
+   * @param {ActivatedRoute} resetPassRoute This property is to get methods from ActivatedRoute
+   * @param {ApiService} resetPassApi This property is to get methods from ApiService
+   * @param {InfoPopupService} resetPassInfoPopup This property is to get methods from InfoPopupService
+   * @param {FormBuilder} formBuilder form group builder
+   * @memberof ResetPasswordPage
+   */
+  constructor(
+    private resetPassRoute: ActivatedRoute,
+    private resetPassApi: ApiService,
+    private resetPassInfoPopup: InfoPopupService,
+    private formBuilder: FormBuilder
+  ) {
+    this.myForm = this.formBuilder.group({
+      newPass: ['', [Validators.required]],
+      confirmPass: ['']
+    }, { validator: this.checkPasswords });
+  }
 
   /**
    * This method is to set initial value of properites
@@ -93,22 +116,36 @@ export class ResetPasswordPage implements OnInit {
   }
 
   /**
-   * This method is to check password validity, send request to API(patch) then handle
+   * check similar of new npassword and confirm password
+   * @param {FormGroup} group
+   * @returns
+   * @memberof ResetPasswordPage
+   */
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    let pass = group.controls.newPass.value;
+    let confirmPass = group.controls.confirmPass.value;
+    return pass === confirmPass ? null : { notSame: true }
+  }
+
+  /**
+   * This method is to send request to API(patch) then handle
    * returned value from API
    * @memberof ResetPasswordPage
    */
   saveNewPassword() {
-    if (this.verifyPassword(this.newPassword, this.confirmNewPassword) === 'notnull') {
-      if (this.newPassword !== this.confirmNewPassword) {
-        // console.log('password do not match');
-        this.retMsg = 'Password do not match';
-      } else {
-        this.retMsg = '';
-        // console.log('password to be saved');
-        const encryptPass = (this.CryptoJS.SHA256(this.newPassword)).toString(this.CryptoJS.enc.Hex);
-        this.requetResetPassword(encryptPass);
-      }
+    const data = {
+      "password": this.myForm.controls.confirmPass.value,
+      "id": this.currToken
     };
+    this.resetPassApi.patchInvitation(data).subscribe(res => console.log(res));
+  }
+
+  /**
+   * activate user API
+   * @memberof ResetPasswordPage
+   */
+  activateUser() {
+    this.resetPassApi.getInvitation(this.currToken).subscribe(res => console.log(res));
   }
 
   /**
@@ -121,47 +158,16 @@ export class ResetPasswordPage implements OnInit {
       { tokenId: this.currToken, password: encryptPass })
       .subscribe(
         data => {
-          this.processRes(data);
-          // if (data.response === undefined) {
-          //   this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
-          //   setTimeout(() => {
-          //     window.location.href = data[0].HTTP_REFERER;
-          //   }, 2500);
-          // } else {
-          //   this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
-          // }
+          if (data.response === undefined) {
+            this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
+            setTimeout(() => {
+              window.location.href = data[0].HTTP_REFERER;
+            }, 2500);
+          } else {
+            this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
+          }
         }
       );
   }
 
-  /**
-   * This method is to process returned response from patch request to update password 
-   * @param {*} data This parameter is to pass response data from API
-   * @memberof ResetPasswordPage
-   */
-  processRes(data) {
-    if (data.response === undefined) {
-      this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
-      setTimeout(() => {
-        window.location.href = data[0].HTTP_REFERER;
-      }, 2500);
-    } else {
-      this.resetPassInfoPopup.alertPopup(data.response.message, 'alert-error');
-    }
-  }
-
-  // }
-  /**
-   * This method is to check validity between 2 password
-   * @param {*} pass1 This parameter will pass password value
-   * @param {*} pass2 This parameter will pass confirmation password's value
-   * @returns
-   * @memberof ResetPasswordPage
-   */
-  verifyPassword(pass1, pass2) {
-    this.retPass1 = (pass1 === undefined || pass1 === null || pass1 === '') ? 'This field is required' : '';
-    this.retPass2 = (pass2 === undefined || pass2 === null || pass2 === '') ? 'This field is required' : '';
-
-    return (this.retPass1 === '' && this.retPass2 === '') ? 'notnull' : 'null'
-  }
 }
