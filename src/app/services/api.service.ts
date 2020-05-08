@@ -70,7 +70,7 @@ export class ApiService {
    * @memberof ApiService
    */
   getApi(address: string) {
-    return this.apiHttp.get(address)
+    return this.apiHttp.get(this.baseUrl + address)
       .pipe(map((res: Response) => res.json()));
   }
 

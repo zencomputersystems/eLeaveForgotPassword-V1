@@ -1,9 +1,10 @@
 import { ApiService } from './../services/api.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../node_modules/@angular/router';
 import { InfoPopupService } from '../services/info-popup.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { jsonpFactory } from '@angular/http/src/http_module';
 
 /**
  * error matcher
@@ -98,7 +99,8 @@ export class ResetPasswordPage implements OnInit {
     private resetPassRoute: ActivatedRoute,
     private resetPassApi: ApiService,
     private resetPassInfoPopup: InfoPopupService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {
     this.myForm = this.formBuilder.group({
       newPass: ['', [Validators.required]],
@@ -137,7 +139,19 @@ export class ResetPasswordPage implements OnInit {
       "password": this.myForm.controls.confirmPass.value,
       "id": this.currToken
     };
-    this.resetPassApi.patchInvitation(data).subscribe(res => console.log(res));
+    this.resetPassApi.patchInvitation(data).subscribe(res => {
+      console.log(res);
+      if (res.status) {
+        this.resetPassInfoPopup.alertPopup('Password is updated successfully. Please login to your account', 'alert-success');
+        setTimeout(() => {
+          window.location.href = 'http://zencore.zen.com.my:8101';
+        }, 3000);
+      } else {
+        this.resetPassInfoPopup.alertPopup(res.message, 'alert-error');
+      }
+    }, err => {
+      this.resetPassInfoPopup.alertPopup(JSON.parse(err._body).message, 'alert-error');
+    });
   }
 
   /**
@@ -145,7 +159,15 @@ export class ResetPasswordPage implements OnInit {
    * @memberof ResetPasswordPage
    */
   activateUser() {
-    this.resetPassApi.getInvitation(this.currToken).subscribe(res => console.log(res));
+    this.resetPassApi.getInvitation(this.currToken).subscribe(res => {
+      console.log(res)
+      this.resetPassInfoPopup.alertPopup('Your account is activated successfully. Please login to your account', 'alert-success');
+      setTimeout(() => {
+        window.location.href = 'http://zencore.zen.com.my:8101';
+      }, 3000);
+    }, fail => {
+      this.resetPassInfoPopup.alertPopup(JSON.parse(fail._body).message, 'alert-error');
+    });
   }
 
   /**
@@ -159,7 +181,7 @@ export class ResetPasswordPage implements OnInit {
       .subscribe(
         data => {
           if (data.response === undefined) {
-            this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your accout', 'alert-success');
+            this.resetPassInfoPopup.alertPopup('Password is successfully updated. Please login to your account', 'alert-success');
             setTimeout(() => {
               window.location.href = data[0].HTTP_REFERER;
             }, 2500);
