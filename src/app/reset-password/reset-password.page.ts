@@ -136,7 +136,7 @@ export class ResetPasswordPage implements OnInit {
    */
   saveNewPassword() {
     const data = {
-      "password": this.myForm.controls.confirmPass.value,
+      "password": window.btoa(this.myForm.controls.confirmPass.value),
       "id": this.currToken
     };
     this.resetPassApi.patchInvitation(data).subscribe(res => {
