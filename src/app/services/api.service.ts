@@ -28,14 +28,14 @@ export class ApiService {
    * This property is bind value of request API's url
    * @memberof ApiService
    */
-  public ROOT_URL = 'http://zencore.zen.com.my:3002';
+  public ROOT_URL = 'https://zencore.zen.com.my:3002';
 
   /**
    * This property is bind value of request API's url
    * @type {string}
    * @memberof ApiService
    */
-  public baseUrl: string = "http://zencore.zen.com.my:3000";
+  public baseUrl: string = "https://zencore.zen.com.my:3000";
 
   /**
    * This method is to send post request to API without header
@@ -115,7 +115,7 @@ export class ApiService {
   //  */
   // reqPatchApi(token: string, passwordVal: string): Observable<any> {
   //   // return this.patchApiWoHeader(data, addr); 
-  //   return this.apiHttpClient.patch('http://zencore.zen.com.my:3002/api/forgot-password', 
+  //   return this.apiHttpClient.patch('https://zencore.zen.com.my:3002/api/forgot-password', 
   //     { tokenId: token, password: passwordVal }).pipe(map((data: any) => { return data; }));
 
   // }
@@ -126,7 +126,7 @@ export class ApiService {
   //  * @memberof ApiService
   //  */
   // forgotpasssuser() {
-  //   return this.apiHttpClient.post('http://zencore.zen.com.my:3002/api/forgot-password', 
+  //   return this.apiHttpClient.post('https://zencore.zen.com.my:3002/api/forgot-password', 
   //     {
   //       email: "lll@zen.com.my",
   //       role: "tenant"
