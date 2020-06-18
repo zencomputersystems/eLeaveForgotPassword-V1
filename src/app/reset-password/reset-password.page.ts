@@ -5,6 +5,7 @@ import { InfoPopupService } from '../services/info-popup.service';
 import { FormBuilder, FormGroup, Validators, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { jsonpFactory } from '@angular/http/src/http_module';
+import { environment as ENV } from 'src/environments/environment';
 
 /**
  * error matcher
@@ -144,7 +145,8 @@ export class ResetPasswordPage implements OnInit {
       if (res.status) {
         this.resetPassInfoPopup.alertPopup('Password is updated successfully. Please login to your account', 'alert-success');
         setTimeout(() => {
-          window.location.href = 'http://zencore.zen.com.my:8101';
+          // window.location.href = 'http://zencore.zen.com.my:8101';
+          window.location.href = ENV.URL_EUSR;
         }, 3000);
       } else {
         this.resetPassInfoPopup.alertPopup(res.message, 'alert-error');
@@ -163,7 +165,8 @@ export class ResetPasswordPage implements OnInit {
       console.log(res)
       this.resetPassInfoPopup.alertPopup('Your account is activated successfully. Please login to your account', 'alert-success');
       setTimeout(() => {
-        window.location.href = 'http://zencore.zen.com.my:8101';
+        // window.location.href = 'http://zencore.zen.com.my:8101';
+        window.location.href = ENV.URL_EUSR;
       }, 3000);
     }, fail => {
       this.resetPassInfoPopup.alertPopup(JSON.parse(fail._body).message, 'alert-error');
