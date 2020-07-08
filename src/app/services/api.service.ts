@@ -29,14 +29,14 @@ export class ApiService {
    * This property is bind value of request API's url
    * @memberof ApiService
    */
-  public ROOT_URL = ENV.URL_BASE; // 'https://zencore.zen.com.my:3002';
+  public ROOT_URL = ENV.URL_BASE; ;
 
   /**
    * This property is bind value of request API's url
    * @type {string}
    * @memberof ApiService
    */
-  public baseUrl: string = ENV.URL_API; // "https://zencore.zen.com.my:3000";
+  public baseUrl: string = ENV.URL_API;
 
   /**
    * This method is to send post request to API without header

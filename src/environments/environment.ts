@@ -7,11 +7,11 @@
  * @export
  */
 export const environment = {
-  production: false,
-  URL_BASE: 'https://zencore.zen.com.my:3002',
-  URL_API: 'https://zencore.zen.com.my:3000',
-  URL_EUSR: 'http://zencore.zen.com.my:8101'
-};
+         production: false,
+         URL_BASE: "https://passwordresetcore.beesuite.app/api/docs/",
+         URL_API: "https://appcore.beesuite.app/api/docs/",
+         URL_EUSR: "https://user.beesuite.app",
+       };
 
 /*
  * For easier debugging in development mode, you can import the following file

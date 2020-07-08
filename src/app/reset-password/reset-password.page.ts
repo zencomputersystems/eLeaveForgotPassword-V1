@@ -145,7 +145,6 @@ export class ResetPasswordPage implements OnInit {
       if (res.status) {
         this.resetPassInfoPopup.alertPopup('Password is updated successfully. Please login to your account', 'alert-success');
         setTimeout(() => {
-          // window.location.href = 'http://zencore.zen.com.my:8101';
           window.location.href = ENV.URL_EUSR;
         }, 3000);
       } else {
@@ -165,7 +164,6 @@ export class ResetPasswordPage implements OnInit {
       console.log(res)
       this.resetPassInfoPopup.alertPopup('Your account is activated successfully. Please login to your account', 'alert-success');
       setTimeout(() => {
-        // window.location.href = 'http://zencore.zen.com.my:8101';
         window.location.href = ENV.URL_EUSR;
       }, 3000);
     }, fail => {
