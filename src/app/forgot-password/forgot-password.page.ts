@@ -54,6 +54,8 @@ export class ForgotPasswordPage implements OnInit {
    */
   public prevPageUrl;
 
+  public image: string = "../../assets/icon/beesuite.png";
+
   /**
    * This method is to set initial value of properties
    * @memberof ForgotPasswordPage

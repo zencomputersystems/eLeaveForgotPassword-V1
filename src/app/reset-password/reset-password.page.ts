@@ -88,6 +88,8 @@ export class ResetPasswordPage implements OnInit {
    */
   public hideConfirm: boolean = false;
 
+  public image: string = "../../assets/icon/beesuite.png";
+
   /**
    *Creates an instance of ResetPasswordPage.
    * @param {ActivatedRoute} resetPassRoute This property is to get methods from ActivatedRoute
