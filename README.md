@@ -24,6 +24,6 @@ Documentation
 
 ### Enviroment Variables
 PORT = 8104
-  URL_BASE: "https://passwordresetcore.beesuite.app/api/docs/",
-  URL_API: "https://appcore.beesuite.app/api/docs/",
+  URL_BASE: "https://passwordresetcore.beesuite.app",
+  URL_API: "https://appcore.beesuite.app",
   URL_EUSR: "https://user.beesuite.app",
