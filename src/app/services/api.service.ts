@@ -94,7 +94,7 @@ export class ApiService {
    * @memberof ApiService
    */
   patchInvitation(data: any) {
-    return this.patchApi(data, '/api/invitation');
+    return this.patchApi(data, '/api/forgot-password');
   }
 
   /**
@@ -115,7 +115,7 @@ export class ApiService {
   //  * @memberof ApiService
   //  */
   // reqPatchApi(token: string, passwordVal: string): Observable<any> {
-  //   // return this.patchApiWoHeader(data, addr); 
+  //   // return this.WoHeader(data, addr); 
   //   return this.apiHttpClient.patch('https://zencore.zen.com.my:3002/api/forgot-password', 
   //     { tokenId: token, password: passwordVal }).pipe(map((data: any) => { return data; }));
 

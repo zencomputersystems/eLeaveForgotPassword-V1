@@ -92,6 +92,11 @@ export class ForgotPasswordPage implements OnInit {
         setTimeout(() => {
           window.location.href = this.prevPageUrl; // (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8102/#/';
         }, 2500);
+      },
+      (error) => {
+        console.log(error);
+        this.resetErrorMsg = error.response.error + ". " + error.response.message;
+
       }
     );
   }
