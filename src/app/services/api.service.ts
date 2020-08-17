@@ -29,7 +29,7 @@ export class ApiService {
    * This property is bind value of request API's url
    * @memberof ApiService
    */
-  public ROOT_URL = ENV.URL_BASE; ;
+  public ROOT_URL = ENV.URL_BASE;
 
   /**
    * This property is bind value of request API's url
