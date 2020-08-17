@@ -89,10 +89,19 @@ export class ForgotPasswordPage implements OnInit {
     }, '/api/forgot-password').subscribe(
       data => { 
         console.log(data);
-        this.forgotPassInfoPopup.alertPopup('Request to reset password sent', 'alert-success');
-        setTimeout(() => {
-          window.location.href = this.prevPageUrl;
-        }, 2500);
+        if (data.status !== 200) {
+          this.resetErrorMsg = data.response.error + ". " + data.response.message;
+        }
+        if (data.accepted[0] !== null) {
+          this.resetErrorMsg = null;
+          this.forgotPassInfoPopup.alertPopup(
+            "Request to reset password sent",
+            "alert-success"
+          );
+          setTimeout(() => {
+            window.location.href = this.prevPageUrl;
+          }, 2500);
+        }
       },
       (error) => {
         console.log(error);

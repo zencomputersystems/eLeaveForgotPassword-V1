@@ -20,7 +20,8 @@ const routes: Routes = [
   //     ),
   // },
   {
-    path: "forgot-password/:role/:token",
+    // https://resetpassword.beesuite.app/#/reset-password/aa4da910-e03b-11ea-9f3c-13c27951e99b/local
+    path: "forgot-password/:token/:loginType",
     loadChildren: () =>
       import("./reset-password/reset-password.module").then(
         (m) => m.ResetPasswordPageModule
