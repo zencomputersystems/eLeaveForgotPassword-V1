@@ -11,12 +11,11 @@ import { ApiService } from '../services/api.service';
  * @implements {OnInit}
  */
 @Component({
-  selector: 'app-forgot-password',
-  templateUrl: './forgot-password.page.html',
-  styleUrls: ['./forgot-password.page.scss'],
+  selector: "app-forgot-password",
+  templateUrl: "./forgot-password.page.html",
+  styleUrls: ["./forgot-password.page.scss"],
 })
 export class ForgotPasswordPage implements OnInit {
-
   /**
    * Creates an instance of ForgotPasswordPage.
    * @param {ActivatedRoute} forgotPassRoute This property is to get methods from ActivatedRoute
@@ -27,14 +26,14 @@ export class ForgotPasswordPage implements OnInit {
   constructor(
     private forgotPassRoute: ActivatedRoute,
     private forgotPassApi: ApiService,
-    private forgotPassInfoPopup: InfoPopupService,
-  ) { }
+    private forgotPassInfoPopup: InfoPopupService
+  ) {}
 
   /**
    * This property is to bind value of inserted email address
    * @memberof ForgotPasswordPage
    */
-  public userEmail = '';
+  public userEmail = "";
 
   /**
    * This property is to bind any error message returned from request post
@@ -56,13 +55,14 @@ export class ForgotPasswordPage implements OnInit {
 
   public image: string = "../../assets/icon/beesuite.png";
 
+  public spinWait = false;
   /**
    * This method is to set initial value of properties
    * @memberof ForgotPasswordPage
    */
   ngOnInit() {
     this.prevPageUrl = document.referrer;
-    this.pageRole =  this.forgotPassRoute.snapshot.paramMap.get('role');
+    this.pageRole = this.forgotPassRoute.snapshot.paramMap.get("role");
   }
 
   /**
@@ -70,8 +70,8 @@ export class ForgotPasswordPage implements OnInit {
    * @memberof ForgotPasswordPage
    */
   requestForgotPassword() {
-    if (this.userEmail === '') {
-      this.resetErrorMsg = 'Email is required';
+    if (this.userEmail === "") {
+      this.resetErrorMsg = "Email is required";
     } else {
       this.processReqForgetPass();
     }
@@ -82,32 +82,41 @@ export class ForgotPasswordPage implements OnInit {
    * @memberof ForgotPasswordPage
    */
   async processReqForgetPass() {
-    this.forgotPassApi.postApiWoHeader({
-      email: this.userEmail,
-      role: this.pageRole,
-      httpReferer: this.prevPageUrl
-    }, '/api/forgot-password').subscribe(
-      data => { 
-        console.log(data);
-        if (data.status !== 200) {
-          this.resetErrorMsg = data.response.error + ". " + data.response.message;
-        }
-        if (data.accepted[0] !== null) {
-          this.resetErrorMsg = null;
-          this.forgotPassInfoPopup.alertPopup(
-            "Request to reset password sent",
-            "alert-success"
-          );
-          setTimeout(() => {
-            window.location.href = this.prevPageUrl;
-          }, 2500);
-        }
-      },
-      (error) => {
-        console.log(error);
-        this.resetErrorMsg = error.response.error + ". " + error.response.message;
+    this.resetErrorMsg = null;
+    this.spinWait = true;
+    this.forgotPassApi
+      .postApiWoHeader(
+        {
+          email: this.userEmail,
+          role: this.pageRole,
+          httpReferer: this.prevPageUrl,
+        },
+        "/api/forgot-password"
+      )
+      .subscribe(
+        (data) => {
+          this.spinWait = false;
+          console.log(data);
 
-      }
-    );
+          if (data.status !== 200) {
+            this.resetErrorMsg =
+              data.response.error + ". " + data.response.message;
+          }
+          if (data.accepted[0] !== null) {
+            this.forgotPassInfoPopup.alertPopup(
+              "Request to reset password sent",
+              "alert-success"
+            );
+            setTimeout(() => {
+              window.location.href = this.prevPageUrl;
+            }, 2500);
+          }
+        },
+        (error) => {
+          console.log(error);
+          this.resetErrorMsg =
+            error.response.error + ". " + error.response.message;
+        }
+      );
   }
 }
