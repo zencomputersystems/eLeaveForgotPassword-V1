@@ -88,9 +88,10 @@ export class ForgotPasswordPage implements OnInit {
       httpReferer: this.prevPageUrl
     }, '/api/forgot-password').subscribe(
       data => { 
+        console.log(data);
         this.forgotPassInfoPopup.alertPopup('Request to reset password sent', 'alert-success');
         setTimeout(() => {
-          window.location.href = this.prevPageUrl; // (this.pageRole === 'tenant') ? 'http://zencore.zen.com.my:8103/#/login' : 'http://zencore.zen.com.my:8102/#/';
+          window.location.href = this.prevPageUrl;
         }, 2500);
       },
       (error) => {
