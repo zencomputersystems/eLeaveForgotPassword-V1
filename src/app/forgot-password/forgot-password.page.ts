@@ -96,13 +96,12 @@ export class ForgotPasswordPage implements OnInit {
       .subscribe(
         (data) => {
           this.spinWait = false;
-          console.log(data);
-
           if (data.status !== 200) {
             this.resetErrorMsg =
               data.response.error + ". " + data.response.message;
           }
           if (data.accepted[0] !== null) {
+            this.resetErrorMsg = null;
             this.forgotPassInfoPopup.alertPopup(
               "Request to reset password sent",
               "alert-success"
