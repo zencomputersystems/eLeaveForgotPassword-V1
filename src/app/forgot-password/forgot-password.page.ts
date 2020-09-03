@@ -107,7 +107,7 @@ export class ForgotPasswordPage implements OnInit {
               "alert-success"
             );
             setTimeout(() => {
-              // window.location.href = this.prevPageUrl;
+              window.location.href = this.prevPageUrl;
             }, 2500);
           }
         },
