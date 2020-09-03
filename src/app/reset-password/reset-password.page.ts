@@ -155,12 +155,14 @@ export class ResetPasswordPage implements OnInit {
     this.resetPassApi.patchInvitation(data).subscribe(
       (res) => {
         console.log(res);
-        console.log(res[0].TOKEN_GUID);
+        // console.log(res[0].TOKEN_GUID);
         // console.log(res.response.statusCode );
         this.resetSpinWait = false;
+        console.log(res);
         if (
-          res.response.statusCode === 400 &&
-          res.response.statusCode !== undefined
+          res.response !== undefined
+          // res.response.statusCode === 400 &&
+          // res.response.statusCode !== undefined
         ) {
           // this.errorMsg = res.response.error + ". " + res.response.message;
           this.resetPassInfoPopup.alertPopup(
@@ -168,7 +170,8 @@ export class ResetPasswordPage implements OnInit {
             "alert-error"
           );
         }
-        if (res[0].TOKEN_GUID !== null && res[0].TOKEN_GUID !== undefined) {
+        if (res[0] !== undefined) {
+          // if (res[0].TOKEN_GUID !== null && res[0].TOKEN_GUID !== undefined) {
           this.errorMsg = null;
           this.resetPassInfoPopup.alertPopup(
             "Password is updated successfully. Please login to your account",
@@ -176,6 +179,7 @@ export class ResetPasswordPage implements OnInit {
           );
           setTimeout(() => {
             // window.location.href = ENV.URL_EUSR;
+            window.location.href = res[0].HTTP_REFERER;
           }, 3000);
         }
       },
