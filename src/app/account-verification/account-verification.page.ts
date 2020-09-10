@@ -59,8 +59,9 @@ export class AccountVerificationPage implements OnInit {
       // "password": window.btoa(this.myForm.controls.confirmPass.value),
       // "id": this.currToken
       password: window.btoa(this.myForm.controls.confirmPass.value),
-      tokenId: this.currToken,
+      id: this.currToken,
     };
+    this.errorMsg = null;
     console.log(data);
     this.resetSpinWait = true;
     this.accVerApi.patchInvitation(data).subscribe(
@@ -69,21 +70,21 @@ export class AccountVerificationPage implements OnInit {
         // console.log(res[0].TOKEN_GUID);
         // console.log(res.response.statusCode );
         this.resetSpinWait = false;
-        console.log(res);
-        if (
-          res.response !== undefined
-          // res.response.statusCode === 400 &&
-          // res.response.statusCode !== undefined
-        ) {
-          // this.errorMsg = res.response.error + ". " + res.response.message;
-          this.accVerInfoPopupService.alertPopup(
-            res.response.error + ". " + res.response.message,
-            "alert-error"
-          );
-        }
+        console.log(res[0]);
+        // if (
+        //   res.response !== undefined
+        //   // res.response.statusCode === 400 &&
+        //   // res.response.statusCode !== undefined
+        // ) {
+        //   // this.errorMsg = res.response.error + ". " + res.response.message;
+        //   this.accVerInfoPopupService.alertPopup(
+        //     res.response.error + ". " + res.response.message,
+        //     "alert-error"
+        //   );
+        // }
         if (res[0] !== undefined) {
           // if (res[0].TOKEN_GUID !== null && res[0].TOKEN_GUID !== undefined) {
-          this.errorMsg = null;
+          // this.errorMsg = null;
           this.accVerInfoPopupService.alertPopup(
             "Password is updated successfully. Please login to your account",
             "alert-success"
@@ -92,9 +93,24 @@ export class AccountVerificationPage implements OnInit {
             // window.location.href = ENV.URL_EUSR;
             window.location.href = res[0].HTTP_REFERER;
           }, 3000);
+        } else {
+          if (res.response !== undefined) {
+            this.accVerInfoPopupService.alertPopup(
+              res.response.error + ". " + res.response.message,
+              "alert-error"
+            );
+            this.errorMsg = res.response.error + ". " + res.response.message;
+            console.log(this.errorMsg);
+          }
+          if (res.status === false) {
+            this.errorMsg = res.message;
+            console.log(this.errorMsg);
+            this.accVerInfoPopupService.alertPopup(res.message, "alert-error");
+          }
         }
       },
       (err) => {
+        console.log(err);
         this.accVerInfoPopupService.alertPopup(
           JSON.parse(err._body).message,
           "alert-error"

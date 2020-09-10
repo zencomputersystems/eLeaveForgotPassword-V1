@@ -20,6 +20,8 @@
        Account Verification</ion-note>
       <ion-note class="noteStyle" style="margin: auto; font-size: 12px; justify-content: center;
          opacity: 0.5; margin-bottom: 15px;">Please insert your new password</ion-note>
+      <ion-note *ngIf="errorMsg !== null" style="margin: auto; font-size: 12px; justify-content: center;
+         opacity: 0.5; margin-bottom: 15px; color:red; display: flex;">{{errorMsg}}</ion-note>
       <form class="formStyle" [formGroup]="myForm">
         <ion-item-group style=" margin: 5px 30px 20px;">
           <mat-form-field style="width: 100%;font-size: 12px;">
@@ -65,6 +67,8 @@
         Account Verification</ion-note>
       <ion-note class="noteStyle note-sm-format" style="margin: auto; font-size: 12px; justify-content: center; 
          opacity: 0.5;">Please insert your new password</ion-note>
+      <ion-note *ngIf="errorMsg !== null" style="margin: auto; font-size: 12px; justify-content: center;
+        opacity: 0.5; margin-bottom: 15px; color:red; display: flex;">{{errorMsg}}</ion-note>
       <form class="formStyle" [formGroup]="myForm">
         <ion-item-group style=" margin: 5px 30px 20px;">
           <mat-form-field style="width: 100%;font-size: 12px;">
