@@ -1,0 +1,101 @@
+<!-- <ion-header>
+  <ion-toolbar>
+    <ion-title>accountVerification</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+</ion-content> -->
+
+<ion-content [class]="'hide-sm-down'" *ngIf="currLoginType === 'local'">
+  <ion-item-group class="mainLayout">
+    <img class="sideimg" src="../../assets/icon/sign-in-abstract.svg" />
+    <ion-item-group class="bodyStyle">
+
+      <div class="loginLogo">
+        <img src={{image}} alt="beesuite" style="color:white;width:100px">
+      </div>
+      <ion-note class="noteStyle" style="justify-content: center; font-size: 14px; margin: 25px 25px 5px;">
+       Account Verification</ion-note>
+      <ion-note class="noteStyle" style="margin: auto; font-size: 12px; justify-content: center;
+         opacity: 0.5; margin-bottom: 15px;">Please insert your new password</ion-note>
+      <form class="formStyle" [formGroup]="myForm">
+        <ion-item-group style=" margin: 5px 30px 20px;">
+          <mat-form-field style="width: 100%;font-size: 12px;">
+            <mat-label>New password</mat-label>
+            <input matInput placeholder="New password" formControlName="newPass" [type]="hideNew ? 'text' : 'password'"
+              required>
+            <mat-icon matSuffix (click)="hideNew = !hideNew">{{hideNew ? 'visibility':'visibility_off'}}</mat-icon>
+            <mat-error *ngIf="myForm.hasError('required', 'newPass')">
+              Please enter your new password
+            </mat-error>
+          </mat-form-field>
+        </ion-item-group>
+        <ion-item-group style=" margin: 5px 30px 20px;">
+          <mat-form-field style="width: 100%;font-size: 12px;">
+            <mat-label>Confirm password</mat-label>
+            <input matInput placeholder="Confirm password" formControlName="confirmPass"
+              [type]="hideConfirm ? 'text' : 'password'" [errorStateMatcher]="matcher" required>
+            <mat-icon matSuffix (click)="hideConfirm = !hideConfirm">{{hideConfirm ? 'visibility':'visibility_off'}}
+            </mat-icon>
+            <mat-error *ngIf="myForm.hasError('notSame')">
+              Passwords do not match
+            </mat-error>
+          </mat-form-field>
+        </ion-item-group>
+
+        <ion-button fill="clear" type="submit" style="width: 150px;display: block;font-size: 11px;
+        text-transform: capitalize;height: 34px;margin: auto;border-radius: 2px;background-color: #43425d;
+          color: #ffffff;" (click)="saveNewPassword()" [disabled]="!myForm.valid">Save New Password
+          <ion-spinner name="lines-small" *ngIf="resetSpinWait"></ion-spinner>
+        </ion-button>
+      </form>
+    </ion-item-group>
+  </ion-item-group>
+</ion-content>
+<ion-content [class]="'hide-sm-up'" style="height: 100%; width: 100%;" *ngIf="currLoginType === 'local'">
+  <ion-item-group class="mainLayout">
+    <img class="sideimg-sm" src="../../assets/icon/sign-in-abstract.svg" />
+    <ion-item-group class="bodyStyle-sm">
+      <div class="loginLogo">
+        <img src={{image}} alt="beesuite" style="color:white;width:100px">
+      </div>
+      <ion-note class="noteStyle note-sm-format" style="justify-content: center; font-size: 14px;">
+        Account Verification</ion-note>
+      <ion-note class="noteStyle note-sm-format" style="margin: auto; font-size: 12px; justify-content: center; 
+         opacity: 0.5;">Please insert your new password</ion-note>
+      <form class="formStyle" [formGroup]="myForm">
+        <ion-item-group style=" margin: 5px 30px 20px;">
+          <mat-form-field style="width: 100%;font-size: 12px;">
+            <mat-label>New password</mat-label>
+            <input matInput placeholder="New password" formControlName="newPass" [type]="hideNew ? 'text' : 'password'"
+              required>
+            <mat-icon matSuffix (click)="hideNew = !hideNew">{{hideNew ? 'visibility':'visibility_off'}}</mat-icon>
+            <mat-error *ngIf="myForm.hasError('required', 'newPass')">
+              Please enter your new password
+            </mat-error>
+          </mat-form-field>
+        </ion-item-group>
+        <ion-item-group style=" margin: 5px 30px 20px;">
+          <mat-form-field style="width: 100%;font-size: 12px;">
+            <mat-label>Confirm password</mat-label>
+            <input matInput placeholder="Confirm password" formControlName="confirmPass"
+              [type]="hideConfirm ? 'text' : 'password'" [errorStateMatcher]="matcher" required>
+            <mat-icon matSuffix (click)="hideConfirm = !hideConfirm">{{hideConfirm ? 'visibility':'visibility_off'}}
+            </mat-icon>
+            <mat-error *ngIf="myForm.hasError('notSame')">
+              Passwords do not match
+            </mat-error>
+          </mat-form-field>
+        </ion-item-group>
+
+        <ion-button fill="clear" type="submit" style="width: 150px;display: block;font-size: 11px;
+        text-transform: capitalize;height: 34px;margin: auto;border-radius: 2px;background-color: #43425d;
+          color: #ffffff;" (click)="saveNewPassword()" [disabled]="!myForm.valid">Save New Password
+          <ion-spinner name="lines-small" *ngIf="resetSpinWait"></ion-spinner>
+        </ion-button>
+      </form>
+    </ion-item-group>
+  </ion-item-group>
+</ion-content>

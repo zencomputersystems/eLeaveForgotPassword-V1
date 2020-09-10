@@ -7,11 +7,12 @@
  * @export
  */
 export const environment = {
-         production: false,
-         URL_BASE: "https://passwordresetcore.beesuite.app",
-         URL_API: "https://passwordresetcore.beesuite.app",
-         URL_EUSR: "https://a.beesuite.app/",
-       };
+  production: false,
+  URL_BASE: "https://passwordresetcore.beesuite.app",
+  URL_API: "https://passwordresetcore.beesuite.app",
+  URL_EUSR: "https://a.beesuite.app/",
+  URL_ACTIVATION: "https://appcore.beesuite.app",
+};
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -34,6 +34,10 @@ const routes: Routes = [
         (m) => m.ForgotPasswordPageModule
       ),
   },
+  {
+    path: 'account-verification/user/:token/:loginType',
+    loadChildren: () => import('./account-verification/account-verification.module').then( m => m.AccountVerificationPageModule)
+  },
 ];
 
 @NgModule({

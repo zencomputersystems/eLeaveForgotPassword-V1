@@ -10,20 +10,16 @@ import { HttpClient } from '@angular/common/http';
  * @class ApiService
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ApiService {
-
   /**
    * Creates an instance of ApiService.
    * @param {Http} apiHttp This property is to get methods from Http
    * @param {HttpClient} apiHttpClient This property is to get methods from HttpClient
    * @memberof ApiService
    */
-  constructor(
-    private apiHttp: Http,
-    private apiHttpClient: HttpClient
-  ) { }
+  constructor(private apiHttp: Http, private apiHttpClient: HttpClient) {}
 
   /**
    * This property is bind value of request API's url
@@ -39,15 +35,25 @@ export class ApiService {
   public baseUrl: string = ENV.URL_API;
 
   /**
+   * This property is to bind url to CRUD request to UR_ACTIVATION
+   * @type {string}
+   * @memberof ApiService
+   */
+  public activationUrl: string = ENV.URL_ACTIVATION;
+
+  /**
    * This method is to send post request to API without header
-   * @param {*} data This paramter will store an array of requested post 
+   * @param {*} data This paramter will store an array of requested post
    * @param {string} address This parameter will store the string of requested addrest to be request in API
    * @returns
    * @memberof ApiService
    */
   postApiWoHeader(data: any, address: string) {
-    return this.apiHttpClient.post(this.ROOT_URL + address, data)
-      .pipe(map((data: any) => { return data; }));
+    return this.apiHttpClient.post(this.ROOT_URL + address, data).pipe(
+      map((data: any) => {
+        return data;
+      })
+    );
   }
 
   /**
@@ -59,9 +65,16 @@ export class ApiService {
    */
   patchApiWoHeader(address: string, data: any) {
     // return this.apiHttp.patch(this.ROOT_URL + address, data);
-    return this.apiHttpClient.patch(this.ROOT_URL + address, data)
-      //.pipe(map((res: Response) => res.json()));
-      .pipe(map((data: any) => { return data; }));
+    return (
+      this.apiHttpClient
+        .patch(this.ROOT_URL + address, data)
+        //.pipe(map((res: Response) => res.json()));
+        .pipe(
+          map((data: any) => {
+            return data;
+          })
+        )
+    );
   }
 
   /**
@@ -71,20 +84,35 @@ export class ApiService {
    * @memberof ApiService
    */
   getApi(address: string) {
-    return this.apiHttp.get(this.baseUrl + address)
+    return this.apiHttp
+      .get(this.baseUrl + address)
       .pipe(map((res: Response) => res.json()));
   }
 
   /**
-   * patch api 
+   * patch api
    * @param {*} patchData
    * @param {string} url
    * @returns
    * @memberof ApiService
    */
   patchApi(patchData: any, url: string) {
-    return this.apiHttp.patch(this.baseUrl + url, patchData)
-      .pipe(map((res: Response) => res.json()))
+    return this.apiHttp
+      .patch(this.baseUrl + url, patchData)
+      .pipe(map((res: Response) => res.json()));
+  }
+  
+  /**
+   * Patch api to Activation Url
+   * @param {*} patchData
+   * @param {string} url
+   * @returns
+   * @memberof ApiService
+   */
+  patchApiInvitation(patchData: any, url: string) {
+    return this.apiHttp
+      .patch(this.activationUrl + url, patchData)
+      .pipe(map((res: Response) => res.json()));
   }
 
   /**
@@ -94,7 +122,7 @@ export class ApiService {
    * @memberof ApiService
    */
   patchInvitation(data: any) {
-    return this.patchApi(data, '/api/forgot-password');
+    return this.patchApiInvitation(data, "/api/forgot-password");
   }
 
   /**
@@ -104,30 +132,30 @@ export class ApiService {
    * @memberof ApiService
    */
   getInvitation(token: string) {
-    return this.getApi('/api/invitation/' + token);
+    return this.getApi("/api/invitation/" + token);
   }
 
   // /**
-  //  * This method is to send request 
+  //  * This method is to send request
   //  * @param {string} token
   //  * @param {string} passwordVal
   //  * @returns {Observable<any>}
   //  * @memberof ApiService
   //  */
   // reqPatchApi(token: string, passwordVal: string): Observable<any> {
-  //   // return this.WoHeader(data, addr); 
-  //   return this.apiHttpClient.patch('https://zencore.zen.com.my:3002/api/forgot-password', 
+  //   // return this.WoHeader(data, addr);
+  //   return this.apiHttpClient.patch('https://zencore.zen.com.my:3002/api/forgot-password',
   //     { tokenId: token, password: passwordVal }).pipe(map((data: any) => { return data; }));
 
   // }
 
   // /**
-  //  * This method is to 
+  //  * This method is to
   //  * @returns
   //  * @memberof ApiService
   //  */
   // forgotpasssuser() {
-  //   return this.apiHttpClient.post('https://zencore.zen.com.my:3002/api/forgot-password', 
+  //   return this.apiHttpClient.post('https://zencore.zen.com.my:3002/api/forgot-password',
   //     {
   //       email: "lll@zen.com.my",
   //       role: "tenant"
@@ -138,5 +166,4 @@ export class ApiService {
   //       })
   //     )
   // }
-
 }
