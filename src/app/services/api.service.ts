@@ -122,7 +122,7 @@ export class ApiService {
    * @memberof ApiService
    */
   patchInvitation(data: any) {
-    return this.patchApiInvitation(data, "/api/forgot-password");
+    return this.patchApiInvitation(data, "/api/invitation/");
   }
 
   /**
