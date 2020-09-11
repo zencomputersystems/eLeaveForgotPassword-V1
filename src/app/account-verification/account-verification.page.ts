@@ -1,9 +1,11 @@
+import { environment } from './../../environments/environment';
 import { ApiService } from './../services/api.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { MyErrorStateMatcher } from '../reset-password/reset-password.page';
 import { ActivatedRoute } from '@angular/router';
 import { InfoPopupService } from '../services/info-popup.service';
+import { env } from 'process';
 
 @Component({
   selector: "app-account-verification",
@@ -91,8 +93,8 @@ export class AccountVerificationPage implements OnInit {
             "alert-success"
           );
           setTimeout(() => {
-            // window.location.href = ENV.URL_EUSR;
-            window.location.href = res.HTTP_REFERER;
+            window.location.href = environment.URL_EUSR;
+            // window.location.href = res.HTTP_REFERER;
           }, 3000);
         } else {
           if (res.response !== undefined) {
