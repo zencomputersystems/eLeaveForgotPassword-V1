@@ -110,6 +110,7 @@ export class ApiService {
    * @memberof ApiService
    */
   patchApiInvitation(patchData: any, url: string) {
+    console.log(this.activationUrl + url);
     return this.apiHttp
       .patch(this.activationUrl + url, patchData)
       .pipe(map((res: Response) => res.json()));
