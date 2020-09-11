@@ -123,6 +123,7 @@ export class ApiService {
    * @memberof ApiService
    */
   patchInvitation(data: any) {
+    console.log("patchInvitation");
     return this.patchApiInvitation(data, "/api/invitation/");
   }
 
