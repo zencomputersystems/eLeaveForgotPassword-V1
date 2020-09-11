@@ -63,6 +63,7 @@ export class AccountVerificationPage implements OnInit {
     };
     this.errorMsg = null;
     console.log(data);
+    console.log('eterreer')
     this.resetSpinWait = true;
     this.accVerApi.patchInvitation(data).subscribe(
       (res) => {
