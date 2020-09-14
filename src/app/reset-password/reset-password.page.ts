@@ -152,7 +152,8 @@ export class ResetPasswordPage implements OnInit {
     };
     this.resetSpinWait = true;
     this.errorMsg = null;
-    this.resetPassApi.patchInvitation(data).subscribe(
+
+    this.resetPassApi.patchApi(data, '/api/forgot-password').subscribe(
       (res) => {
         console.log(res);
         // console.log(res[0].TOKEN_GUID);
