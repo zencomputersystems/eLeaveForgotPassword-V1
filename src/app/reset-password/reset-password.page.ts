@@ -123,6 +123,7 @@ export class ResetPasswordPage implements OnInit {
   ngOnInit() {
     this.currToken = this.resetPassRoute.snapshot.paramMap.get("token");
     this.currLoginType = this.resetPassRoute.snapshot.paramMap.get("loginType");
+    console.log('resetpassword');
   }
 
   /**
@@ -152,7 +153,9 @@ export class ResetPasswordPage implements OnInit {
     };
     this.resetSpinWait = true;
     this.errorMsg = null;
-    this.resetPassApi.patchInvitation(data).subscribe(
+    console.log(data);
+    console.log("api/forgot-password");
+    this.resetPassApi.patchApi(data, '/api/forgot-password').subscribe(
       (res) => {
         console.log(res);
         // console.log(res[0].TOKEN_GUID);
