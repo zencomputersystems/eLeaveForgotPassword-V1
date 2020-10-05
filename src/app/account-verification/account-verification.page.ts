@@ -17,6 +17,7 @@ export class AccountVerificationPage implements OnInit {
   public hideConfirm: boolean = false;
   public hideNew: boolean = false;
   public resetSpinWait = false;
+  public clickDisable: boolean = false;
   public image: string = "../../assets/icon/beesuite.png";
   /**
    * This method is to bind current login type
@@ -65,6 +66,7 @@ export class AccountVerificationPage implements OnInit {
     console.log(data);
     console.log('eterreer')
     this.resetSpinWait = true;
+    this.clickDisable = true;
     this.accVerApi.patchInvitation(data).subscribe(
       (res) => {
         console.log(res);
