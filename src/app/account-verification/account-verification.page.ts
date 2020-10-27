@@ -123,4 +123,32 @@ export class AccountVerificationPage implements OnInit {
       }
     );
   }
+
+
+
+  /**
+   * activate user API
+   * @memberof ResetPasswordPage
+   */
+  activateUser() {
+    this.accVerApi.getInvitation(this.currToken).subscribe(
+      (res) => {
+        console.log(res);
+        this.accVerInfoPopupService.alertPopup(
+          "Your account is activated successfully. Please login to your account",
+          "alert-success"
+        );
+        setTimeout(() => {
+          window.location.href = environment.URL_EUSR; // env.URL_EUSR;
+        }, 3000);
+      },
+      (fail) => {
+        this.accVerInfoPopupService.alertPopup(
+          JSON.parse(fail._body).message,
+          "alert-error"
+        );
+      }
+    );
+  }
+
 }
