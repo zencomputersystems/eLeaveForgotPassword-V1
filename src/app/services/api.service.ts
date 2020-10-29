@@ -147,7 +147,7 @@ export class ApiService {
    * @memberof ApiService
    */
   getInvitation(token: string) {
-    return this.getApi("/api/invitation/" + token);
+    return this.getApiInvitation("/api/invitation/" + token);
   }
 
   // /**
