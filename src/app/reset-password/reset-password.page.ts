@@ -200,7 +200,7 @@ export class ResetPasswordPage implements OnInit {
    * @memberof ResetPasswordPage
    */
   activateUser() {
-    this.resetPassApi.getInvitation(this.currToken).subscribe(
+    this.resetPassApi.getApiInvitation(this.currToken).subscribe(
       (res) => {
         console.log(res);
         this.resetPassInfoPopup.alertPopup(

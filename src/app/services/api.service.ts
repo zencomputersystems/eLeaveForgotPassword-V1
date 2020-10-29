@@ -90,6 +90,19 @@ export class ApiService {
   }
 
   /**
+   * This method is to send get request to API from invitation
+   * @param {string} address This parameter will store the string of requested addrest to be request in API
+   * @returns
+   * @memberof ApiService
+   */
+  getApiInvitation(address: string) {
+    return this.apiHttp
+      .get(this.activationUrl + address)
+      .pipe(map((res: Response) => res.json()));
+  }
+
+
+  /**
    * patch api
    * @param {*} patchData
    * @param {string} url
